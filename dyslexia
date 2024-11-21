@@ -1,0 +1,162 @@
+**Comprehension passage:** 
+
+"I didn't do anything!" Robert yelled, retreating into a corner. "I didn't do anything and you can't prove that I did!" He was seething with fury.
+
+"Give us a break, Robert!" I said, moving closer to him. "I know you stole the king's ring. I saw you taking it from the king's room. Now, where did you hide it? Stop denying and just cough it up already."
+
+Just then, Robert's face turned red and he bent over, grasping his knees. Dry rasping sounds came up from somewhere deep in his throat. He sounded like he was choking on something.
+
+I rushed towards Robert to see what was going on. Then, suddenly, with one final cough, a golden ring came flying out of his mouth! It flew across the room, spinning through the air as if in slow motion. Together with it, Robert's spit also flew in every direction.
+
+Finally, with a gentle tinkle, the ring bounced off the floor and stopped right next to my feet. "Hey, you didn’t have to do exactly what I said. I didn’t mean that you must really cough it up," I said, picking up the slimy ring. I took another look at Robert before I left. He was grimacing in pain and groaning miserably.
+
+"Serve you right," I muttered as I walked through the door.
+
+
+**Comprehension Questions:**
+
+1) Tick ✔ your chosen answer.
+
+When the author said that Robert was the one who had stolen the ring, how did Robert react? (1m)
+
+Robert ______ that he had stolen the ring.
+
+□ admitted
+
+□ denied
+
+
+3) Where did Robert hide the ring? (1m)
+
+
+4) Why did Robert's face turn red? (1m)
+
+
+5) Which word from lines 10 to 15 tells us that the ring did not fall to the ground silently? (1m)
+
+
+6) Write 1, 2, and 3 below to show what happened first, next, and last. (1m)
+
+___ The ring flew across the room and fell to the ground.
+
+___ The writer knew that Robert had stolen the king's ring.
+
+___ Robert was angry with the writer because of the writer's accusation.
+
+
+**- End of Paper -**
+
+
+*Adapted from Cough-It-Up from www.playdreamscape.com*
+*forked from geon.github.com*
+
+<script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
+<script type="text/javascript">
+
+"use strict";
+
+$(function(){
+
+	var getTextNodesIn = function(el) {
+	    return $(el).find(":not(iframe,script)").addBack().contents().filter(function() {
+	        return this.nodeType == 3;
+	    });
+	};
+
+	// var textNodes = getTextNodesIn($("p, h1, h2, h3"));
+	var textNodes = getTextNodesIn($("*"));
+
+
+
+	function isLetter(char) {
+		return /^[\d]$/.test(char);
+	}
+
+
+	var wordsInTextNodes = [];
+	for (var i = 0; i < textNodes.length; i++) {
+		var node = textNodes[i];
+
+		var words = []
+
+		var re = /\w+/g;
+		var match;
+		while ((match = re.exec(node.nodeValue)) != null) {
+
+			var word = match[0];
+			var position = match.index;
+
+			words.push({
+				length: word.length,
+				position: position
+			});
+		}
+
+		wordsInTextNodes[i] = words;
+	};
+
+
+	function messUpWords () {
+
+		for (var i = 0; i < textNodes.length; i++) {
+
+			var node = textNodes[i];
+
+			for (var j = 0; j < wordsInTextNodes[i].length; j++) {
+
+				// Only change a tenth of the words each round.
+				if (Math.random() > 1/10) {
+
+					continue;
+				}
+
+				var wordMeta = wordsInTextNodes[i][j];
+
+				var word = node.nodeValue.slice(wordMeta.position, wordMeta.position + wordMeta.length);
+				var before = node.nodeValue.slice(0, wordMeta.position);
+				var after  = node.nodeValue.slice(wordMeta.position + wordMeta.length);
+
+				node.nodeValue = before + messUpWord(word) + after;
+			};
+		};
+	}
+
+	function messUpWord (word) {
+
+		if (word.length < 3) {
+
+			return word;
+		}
+
+		return word[0] + messUpMessyPart(word.slice(1, -1)) + word[word.length - 1];
+	}
+
+	function messUpMessyPart (messyPart) {
+
+		if (messyPart.length < 2) {
+
+			return messyPart;
+		}
+
+		var a, b;
+		while (!(a < b)) {
+
+			a = getRandomInt(0, messyPart.length - 1);
+			b = getRandomInt(0, messyPart.length - 1);
+		}
+
+		return messyPart.slice(0, a) + messyPart[b] + messyPart.slice(a+1, b) + messyPart[a] + messyPart.slice(b+1);
+	}
+
+	// From https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Math/random
+	function getRandomInt(min, max) {
+		
+		return Math.floor(Math.random() * (max - min + 1) + min);
+	}
+
+
+	setInterval(messUpWords, 50);
+});
+
+
+</script>
